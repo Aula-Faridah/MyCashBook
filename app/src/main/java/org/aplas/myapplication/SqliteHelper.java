@@ -56,17 +56,24 @@ public class SqliteHelper extends SQLiteOpenHelper{
 
     }
 
-    public Boolean updateData(String username, String password) {
+//    public Cursor Get(String table){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        return db.rawQuery("SELECT * FROM " + table, null);
+//    }
+
+    public Cursor where(String table, String where) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM" + table + " WHERE " + where, null);
+    }
+
+    public Boolean updatePass(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put("username", username);
         values.put("password", password);
 
-        long result = db.insert("user", null, values);
-        if (result == -1) return false;
-        else
-            return true;
+        long result = db.update("user",values,"username=?",new String[]{username});
+        return  result != -1;
 
     }
 

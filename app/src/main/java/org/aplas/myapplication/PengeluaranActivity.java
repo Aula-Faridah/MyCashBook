@@ -64,6 +64,14 @@ public class PengeluaranActivity extends AppCompatActivity {
             }
         });
 
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        editdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDateDialog();
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -72,14 +80,6 @@ public class PengeluaranActivity extends AppCompatActivity {
                 Intent intent = new Intent(PengeluaranActivity.this, BerandaActivity.class);
                 startActivity(intent);
                 finish();
-            }
-        });
-
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        editdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDateDialog();
             }
         });
 
