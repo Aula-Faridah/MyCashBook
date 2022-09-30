@@ -27,6 +27,7 @@ public class CashflowActivity extends AppCompatActivity {
 
         back = findViewById(R.id.btnKembali);
         rv = findViewById(R.id.rv_cashflow);
+        rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(CashflowActivity.this));
 
         showData();
@@ -44,9 +45,10 @@ public class CashflowActivity extends AppCompatActivity {
     }
 
     void showData(){
+        SqliteHelper db = SqliteHelper.getInstance(CashflowActivity.this);
 
         keuanganList.clear();
-        keuanganList = DB.getDataTrans();
+        keuanganList = db.getDataTrans();
         detailAdapter = new DetailAdapter(keuanganList);
 
         if (detailAdapter.getItemCount()==0) {

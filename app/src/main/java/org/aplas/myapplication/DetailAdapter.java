@@ -1,5 +1,7 @@
 package org.aplas.myapplication;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailHold
     List<DetailModel> detailModels = new ArrayList<>();
 
     public DetailAdapter(List<DetailModel> detailModels){
+
         this.detailModels = detailModels;
     }
 
@@ -25,7 +28,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailHold
     }
 
     @Override
-    public void onBindViewHolder(DetailHolder holder, int position) {
+    public void onBindViewHolder(DetailHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvKeterangan.setText(detailModels.get(position).getKeterangan());
         holder.tvTanggal.setText(detailModels.get(position).getTanggal());
         if(detailModels.get(position).getFlow().equals("income")){
@@ -41,6 +44,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.DetailHold
 
     @Override
     public int getItemCount() {
+
         return detailModels.size();
     }
 
