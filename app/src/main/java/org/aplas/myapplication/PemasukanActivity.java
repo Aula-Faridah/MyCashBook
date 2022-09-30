@@ -3,8 +3,6 @@ package org.aplas.myapplication;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.FloatMath;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -64,15 +62,24 @@ public class PemasukanActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SQLiteDatabase db = DB.getWritableDatabase();
-                db.execSQL("insert into tbl_trans(id_trans, tglmasuk, nommasuk, ketmasuk) values('" +
-                        editdate.getText().toString() + "','" +
-                        editnom.getText().toString() + "','" +
-                        editket.getText().toString() + "')");
-                Toast.makeText(getApplicationContext(), "Berhasil", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(PemasukanActivity.this, BerandaActivity.class);
-                startActivity(intent);
-                finish();
+                Integer jml = Integer.valueOf(editnom.getText().toString());
+
+                boolean added = DB.pemasukan(jml, editket.getText().toString(), editdate.getText().toString(), "income");
+
+                if (added) {
+                    Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(PemasukanActivity.this, BerandaActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to add", Toast.LENGTH_LONG).show();
+                }
             }
+//                db.execSQL("insert into tbl_trans(id_trans, tglmasuk, nommasuk, ketmasuk) values('" +
+//                        editdate.getText().toString() + "','" +
+//                        editnom.getText().toString() + "','" +
+//                        editket.getText().toString() + "')");
+//                finish();
+
 //                String nom = editnom.getText().toString();
 //                String ket = editket.getText().toString();
 //                String date = editdate.getText().toString();
