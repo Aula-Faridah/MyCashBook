@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingActivity extends AppCompatActivity {
     Button btnsimpan,btnkembali;
-    EditText pass, newpass;
+    EditText pass, newpass, username;
     SqliteHelper DB;
 
     @Override
@@ -21,6 +21,7 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        username = findViewById(R.id.edittextUsername);
         pass = findViewById(R.id.edittextPassword);
         newpass  = findViewById(R.id.edittextPassword2);
         btnsimpan = findViewById(R.id.btnSave);
@@ -31,18 +32,17 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 if (pass.getText().toString().equals("") || newpass.getText().toString().equals("")) {
                     Toast.makeText(SettingActivity.this, "All fields Required", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    Cursor data = DB.where("user","username = 'username' AND password ='" + pass.getText().toString() + "'" );
+                    Boolean checkuserpass = DB.checkUsernamePassword(username.getText().toString(),pass.getText().toString());
 
-                    if (data.getCount() == 0) {
+                    if (checkuserpass==false) {
                         Toast.makeText(SettingActivity.this, "Your Password is wrong", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Boolean isUpdated = DB.updatePass("username", newpass.getText().toString());
+                        Boolean isUpdated = DB.updatePass(username.getText().toString(), newpass.getText().toString());
 
                         if(isUpdated) {
                             Toast.makeText(SettingActivity.this, "Your Password already changed", Toast.LENGTH_SHORT).show();
