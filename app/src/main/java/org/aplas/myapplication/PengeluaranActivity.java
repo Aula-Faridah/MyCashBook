@@ -60,7 +60,7 @@ public class PengeluaranActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Integer jml = Integer.valueOf(editnom.getText().toString());
 
-                boolean added = DB.pemasukan(jml, editket.getText().toString(), editdate.getText().toString(), "outcome");
+                boolean added = DB.insertTrans(jml, editket.getText().toString(), editdate.getText().toString(), "outcome");
 
                 if (added) {
                     Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_LONG).show();

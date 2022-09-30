@@ -34,7 +34,7 @@ public class SqliteHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table user(id INTEGER primary key, username TEXT, password TEXT)");
-        String sql = "create table tbl_trans(id_trans INTEGER PRIMARY KEY AUTOINCREMENT, jumlah INTEGER, keterangan TEXT, tanggal TEXT, flow TEXT)";
+        String sql = "create table tb_trans(id_trans INTEGER PRIMARY KEY AUTOINCREMENT, jumlah INTEGER, keterangan TEXT, tanggal TEXT, flow TEXT)";
         db.execSQL(sql);
 
     }
@@ -113,27 +113,7 @@ public class SqliteHelper extends SQLiteOpenHelper{
         return l;
     }
 
-    public Boolean insertDataTrans(DetailModel detailModel) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put("tglmasuk", detailModel.getTanggal());
-        values.put("jumlah", detailModel.getNominal());
-        values.put("keterangan", detailModel.getKeterangan());
-        values.put("flow", detailModel.getFlow());
-
-        db.insert("tb_trans",null,values);
-
-
-
-        long result = db.insert("tbl_trans", null, values);
-        if (result == -1) return false;
-        else
-            return true;
-
-    }
-
-    public boolean pemasukan(Integer j, String k, String t, String f){
+    public boolean insertTrans(Integer j, String k, String t, String f){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("jumlah", j);
@@ -143,6 +123,11 @@ public class SqliteHelper extends SQLiteOpenHelper{
 
         long result = db.insert("tb_trans", null, values);
         return result != -1;
+    }
+
+    public Cursor total(String f, String t, String w){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT SUM(" + f + ") AS result FROM " + t + " WHERE " + w, null);
     }
 
 }

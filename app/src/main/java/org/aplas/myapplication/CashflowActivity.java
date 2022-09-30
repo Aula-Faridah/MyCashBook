@@ -18,7 +18,7 @@ public class CashflowActivity extends AppCompatActivity {
     RecyclerView rv;
     DetailAdapter detailAdapter;
     List<DetailModel> keuanganList = new ArrayList<>();
-    SqliteHelper DB;
+    SqliteHelper DB = new SqliteHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,6 @@ public class CashflowActivity extends AppCompatActivity {
         back = findViewById(R.id.btnKembali);
         rv = findViewById(R.id.rv_cashflow);
         rv.setLayoutManager(new LinearLayoutManager(CashflowActivity.this));
-        DB = new SqliteHelper(this);
 
         showData();
 
