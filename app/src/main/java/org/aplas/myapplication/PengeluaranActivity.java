@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,7 +48,7 @@ public class PengeluaranActivity extends AppCompatActivity {
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
-        editdate = findViewById(R.id.editTanggal);
+        editdate = findViewById(R.id.editTgglPengeluaran);
         editnom = findViewById(R.id.editNominalPengeluaran);
         editket = findViewById(R.id.editKeteranganPengeluaran);
         save = findViewById(R.id.btnSave);
@@ -57,9 +58,20 @@ public class PengeluaranActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float nom = Float.parseFloat(editnom.getText().toString());
-                String ket = editket.getText().toString();
-                String date = String.valueOf(editdate.getText().toString());
+                Integer jml = Integer.valueOf(editnom.getText().toString());
+
+                boolean added = DB.pemasukan(jml, editket.getText().toString(), editdate.getText().toString(), "outcome");
+
+                if (added) {
+                    Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(PengeluaranActivity.this, BerandaActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to add", Toast.LENGTH_LONG).show();
+                }
+//                float nom = Float.parseFloat(editnom.getText().toString());
+//                String ket = editket.getText().toString();
+//                String date = String.valueOf(editdate.getText().toString());
 
             }
         });

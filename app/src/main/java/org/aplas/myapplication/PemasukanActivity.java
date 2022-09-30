@@ -61,7 +61,6 @@ public class PemasukanActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase db = DB.getWritableDatabase();
                 Integer jml = Integer.valueOf(editnom.getText().toString());
 
                 boolean added = DB.pemasukan(jml, editket.getText().toString(), editdate.getText().toString(), "income");

@@ -56,13 +56,13 @@
                     android:id="@+id/editTgglPengeluaran"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/et_style"
                     android:hint="Masukkan Tanggal"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:typeface="monospace"
-                    android:background="@drawable/et_style"
-                    android:layout_gravity="center"/>
+                    android:typeface="monospace" />
 
                 <ImageView
                     android:layout_width="35dp"

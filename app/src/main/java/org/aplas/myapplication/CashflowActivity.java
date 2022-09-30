@@ -23,20 +23,19 @@ public class CashflowActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_cashflow);
+        setContentView(R.layout.activity_cashflow);
 
         back = findViewById(R.id.btnKembali);
         rv = findViewById(R.id.rv_cashflow);
         rv.setLayoutManager(new LinearLayoutManager(CashflowActivity.this));
         DB = new SqliteHelper(this);
 
-        getDataTrans();
+        showData();
 
         back.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(CashflowActivity.this, BerandaActivity.class);
                 startActivity(intent);
                 finish();
@@ -45,7 +44,7 @@ public class CashflowActivity extends AppCompatActivity {
 
     }
 
-    void getDataTrans(){
+    void showData(){
 
         keuanganList.clear();
         keuanganList = DB.getDataTrans();

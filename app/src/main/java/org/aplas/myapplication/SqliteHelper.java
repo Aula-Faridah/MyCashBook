@@ -34,7 +34,7 @@ public class SqliteHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table user(id INTEGER primary key, username TEXT, password TEXT)");
-        String sql = "create table if not exists tbl_trans(id_trans INTEGER PRIMARY KEY AUTOINCREMENT, jumlah INTEGER, keterangan TEXT, tanggal TEXT, flow TEXT)";
+        String sql = "create table tbl_trans(id_trans INTEGER PRIMARY KEY AUTOINCREMENT, jumlah INTEGER, keterangan TEXT, tanggal TEXT, flow TEXT)";
         db.execSQL(sql);
 
     }
