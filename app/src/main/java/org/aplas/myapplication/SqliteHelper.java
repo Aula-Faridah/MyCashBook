@@ -31,9 +31,9 @@ public class SqliteHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table user(id INTEGER primary key, username TEXT, password TEXT)");
+        String sql = "CREATE TABLE IF NOT EXISTS tbl_trans(id_trans INTEGER PRIMARY KEY AUTOINCREMENT, tglmasuk TEXT, nommasuk TEXT, ketmasuk TEXT, totmasuk TEXT, tglkeluar TEXT, nomkeluar TEXT, ketkeluar TEXT, totkeluar TEXT)";
+        db.execSQL(sql);
 
-        //SQLiteDatabase db = this.getWritableDatabase();
-        //ContentValues values = new ContentValues();
     }
 
     @Override
@@ -85,6 +85,21 @@ public class SqliteHelper extends SQLiteOpenHelper{
             return true;
         else
             return false;
+    }
+
+    public Boolean insertDataTransIn(String d, String n, String k ) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("tglmasuk", d);
+        values.put("nommasuk", n);
+        values.put("ketmasuk", k);
+
+        long result = db.insert("tbl_trans", null, values);
+        if (result == -1) return false;
+        else
+            return true;
+
     }
 
 }
