@@ -21,7 +21,7 @@ public class PemasukanActivity extends AppCompatActivity {
 
     EditText editdate, editnom, editket;
     Button save, back;
-    SqliteHelper DB;
+    SqliteHelper DB = new SqliteHelper(this);
     DatePickerDialog datePickerDialog;
     SimpleDateFormat dateFormatter;
 
@@ -55,22 +55,26 @@ public class PemasukanActivity extends AppCompatActivity {
         editket = findViewById(R.id.editKeterangan);
         save = findViewById(R.id.btnSave);
         back = findViewById(R.id.btnKembali);
-        DB = new SqliteHelper(this);
-
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer jml = Integer.valueOf(editnom.getText().toString());
 
-                boolean added = DB.insertTrans(jml, editket.getText().toString(), editdate.getText().toString(), "income");
-
-                if (added) {
-                    Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(PemasukanActivity.this, BerandaActivity.class);
-                    startActivity(intent);
+                if (editdate.getText().toString().equals("") || editnom.getText().toString().equals("") || editket.getText().toString().equals("")) {
+                    Toast.makeText(PemasukanActivity.this, "All fields Required", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to add", Toast.LENGTH_LONG).show();
+                    Integer jml = Integer.valueOf(editnom.getText().toString());
+                    SqliteHelper dbacess = SqliteHelper.getInstance(PemasukanActivity.this);
+
+                    boolean added = dbacess.insertTrans(editdate.getText().toString(), jml, "income", editket.getText().toString());
+
+                    if (added) {
+                        Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(PemasukanActivity.this, BerandaActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Failed to add", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 //                db.execSQL("insert into tbl_trans(id_trans, tglmasuk, nommasuk, ketmasuk) values('" +

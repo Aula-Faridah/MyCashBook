@@ -14,6 +14,7 @@ import java.util.List;
 
 public class SqliteHelper extends SQLiteOpenHelper{
     private Context context;
+    private static SqliteHelper instance;
     //Database name and version
     public static final String DATABASE_NAME = "myappfintech.db";
     public static final int DATABASE_VERSION = 1;
@@ -29,6 +30,13 @@ public class SqliteHelper extends SQLiteOpenHelper{
 
     public SqliteHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static SqliteHelper getInstance(@Nullable Context context) {
+        if(instance == null){
+            instance = new SqliteHelper(context);
+        }
+        return instance;
     }
 
     @Override
@@ -113,13 +121,13 @@ public class SqliteHelper extends SQLiteOpenHelper{
         return l;
     }
 
-    public boolean insertTrans(Integer j, String k, String t, String f){
+    public boolean insertTrans(String t, Integer j, String f, String k){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("jumlah", j);
-        values.put("keterangan", k);
         values.put("tanggal", t);
+        values.put("jumlah", j);
         values.put("flow", f);
+        values.put("keterangan", k);
 
         long result = db.insert("tb_trans", null, values);
         return result != -1;

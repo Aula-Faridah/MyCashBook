@@ -63,8 +63,8 @@ public class BerandaActivity extends AppCompatActivity {
     }
 
     private void getTotalIncome() {
-
-        Cursor data = DB.total("jumlah", "tb_trans", "flow = 'income'");
+        SqliteHelper db = SqliteHelper.getInstance(BerandaActivity.this);
+        Cursor data = db.total("jumlah", "tb_trans", "flow = 'income'");
 
         if(data.getCount() == 0){
             totalincome.setText("Rp. 0.-");
@@ -80,17 +80,17 @@ public class BerandaActivity extends AppCompatActivity {
     }
 
     private void getTotalExpense() {
-
-        Cursor data = DB.total("jumlah", "tb_trans", "flow = 'outcome'");
+        SqliteHelper db = SqliteHelper.getInstance(BerandaActivity.this);
+        Cursor data = db.total("jumlah", "tb_trans", "flow = 'outcome'");
 
         if(data.getCount() == 0){
             totalincome.setText("Rp. 0.-");
         } else {
             while(data.moveToNext()){
                 if(data.getString(0) != null) {
-                    totalincome.setText("Rp. " + data.getString(0) + ".-");
+                    totalexpense.setText("Rp. " + data.getString(0) + ".-");
                 } else {
-                    totalincome.setText("Rp. 0.-");
+                    totalexpense.setText("Rp. 0.-");
                 }
             }
         }

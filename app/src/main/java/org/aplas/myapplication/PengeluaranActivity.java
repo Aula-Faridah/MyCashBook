@@ -58,17 +58,24 @@ public class PengeluaranActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer jml = Integer.valueOf(editnom.getText().toString());
 
-                boolean added = DB.insertTrans(jml, editket.getText().toString(), editdate.getText().toString(), "outcome");
-
-                if (added) {
-                    Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(PengeluaranActivity.this, BerandaActivity.class);
-                    startActivity(intent);
+                if (editdate.getText().toString().equals("") || editnom.getText().toString().equals("") || editket.getText().toString().equals("")) {
+                    Toast.makeText(PengeluaranActivity.this, "All fields Required", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to add", Toast.LENGTH_LONG).show();
+                    Integer jml = Integer.valueOf(editnom.getText().toString());
+                    SqliteHelper dbacess = SqliteHelper.getInstance(PengeluaranActivity.this);
+
+                    boolean added = dbacess.insertTrans(editdate.getText().toString(), jml, "outcome", editket.getText().toString());
+
+                    if (added) {
+                        Toast.makeText(getApplicationContext(), "Successfully added", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(PengeluaranActivity.this, BerandaActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Failed to add", Toast.LENGTH_LONG).show();
+                    }
                 }
+
 //                float nom = Float.parseFloat(editnom.getText().toString());
 //                String ket = editket.getText().toString();
 //                String date = String.valueOf(editdate.getText().toString());
